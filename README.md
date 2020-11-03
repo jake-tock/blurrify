@@ -1,6 +1,6 @@
 # blurrify
 
-![](build/blurrify-icon.png)
+<img src="build/blurrify-icon.png" height="250" width="250" alt="Blurrify logo" />
 
 Wow! Would ya look at that!
 
