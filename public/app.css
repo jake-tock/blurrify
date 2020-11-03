@@ -88,6 +88,13 @@ header {
   padding: 0.75rem;
   width: 100%;
 }
+header input:focus {
+  color: var(--color-white);
+}
+header input {
+  color: var(--color-black08);
+  width: 300px;
+}
 header > div + div {
   margin-left: 1rem;
 }
