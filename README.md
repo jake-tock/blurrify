@@ -29,3 +29,5 @@ brew install imagemagick
 Visit [/dist](https://github.com/jake-tock/blurrify/tree/main/dist) to get the latest version of the app dmg file.
 
 Download it, mount the dmg and move to your applications folder.
+
+> first time opening, you may have to find it and `right click > open` it because apple doesnt trust it. nor should it. once you do that, you should be fine opening it however you open applications.
