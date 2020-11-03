@@ -1,10 +1,15 @@
-    
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:* data:;">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self' http://localhost:* data:;">
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' http://localhost:* data:;"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self' http://localhost:* data:;"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blurrify</title>
     <link rel="stylesheet" href="public/app.css" />
@@ -17,11 +22,7 @@
         </a>
       </section>
       <aside>
-        <form
-          id="upload"
-          method="post"
-          enctype="multipart/form-data"
-        >
+        <form id="upload" method="post" enctype="multipart/form-data">
           <div id="file-div" class="size-1 unpadded">
             <input id="file" type="file" name="file" required accept=".jpg,.png" />
             <label for="file"><span>Load Image</span><img id="preview" /></label>
@@ -50,7 +51,7 @@
               <label for="gamma">Gamma</label>
             </div>
           </div>
-          
+
           <div class="size-1">
             <label>Saturation</label>
             <div>
