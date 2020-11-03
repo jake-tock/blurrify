@@ -165,6 +165,15 @@ a#result-url {
   position: relative;
   width: 100%;
 }
+a#result-url:hover::after {
+  background-color: var(--color-black10);
+  color: var(--color-white);
+  content: 'Click to download';
+  padding: 0.5rem;
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+}
 img#result {
   height: auto;
   left: 50%;
