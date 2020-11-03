@@ -4,7 +4,7 @@
 
 Wow! Would ya look at that!
 
-<img src="build/blurrify-screenshot.jpg" style="height: auto; width: 100%" height="2800" width="1998" alt="Screenshot of the Blurrify app" />
+<img src="build/blurrify-screenshot.jpg" height="500" width="700" alt="Screenshot of the Blurrify app" />
 
 ## Updating instructions
 
