@@ -1,5 +1,7 @@
 # blurrify
 
+![](build/blurrify-icon.png)
+
 Wow! Would ya look at that!
 
 ## Updating instructions
