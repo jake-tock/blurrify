@@ -26,6 +26,6 @@ brew install imagemagick
 
 ### Step 3: download latest version
 
-Visit [/dist](https://github.com/jake-tock/blurrify/tree/main/dist/mac) to get the latest version of the app dmg file.
+Visit [/dist](https://github.com/jake-tock/blurrify/tree/main/dist) to get the latest version of the app dmg file.
 
 Download it, mount the dmg and move to your applications folder.
