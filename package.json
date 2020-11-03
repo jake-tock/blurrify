@@ -2,7 +2,7 @@
   "author": "Jake Albaugh <jake.albaugh@gmail.com>",
   "name": "blurrify",
   "description": "a beautiful blurred image transformation tool",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "main.js",
   "scripts": {
     "postinstall": "install-app-deps",

@@ -4,6 +4,8 @@
 
 Wow! Would ya look at that!
 
+<img src="build/blurrify-screenshot.jpg" style="height: auto; width: 100%" height="2800" width="1998" alt="Screenshot of the Blurrify app" />
+
 ## Updating instructions
 
 jump to Step 3 of Installation instructions.
