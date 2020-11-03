@@ -1,0 +1,31 @@
+{
+  "author": "Jake Albaugh <jake.albaugh@gmail.com>",
+  "name": "blurrify",
+  "description": "a beautiful blurred image transformation tool",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "install-app-deps",
+    "start": "NODE_ENV=development electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.blurrify.app",
+    "target": "dmg",
+    "icon": "./build/blurrify-icon.icns"
+  },
+  "extraResources": [
+    "**/*"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^10.1.5",
+    "electron-builder": "^22.9.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "fix-path": "^3.0.0",
+    "multer": "^1.4.2"
+  }
+}

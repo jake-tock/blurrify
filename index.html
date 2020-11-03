@@ -1,0 +1,114 @@
+    
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:* data:;">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self' http://localhost:* data:;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blurrify</title>
+    <link rel="stylesheet" href="public/app.css" />
+  </head>
+  <body>
+    <main>
+      <section>
+        <a href="#" download id="result-url">
+          <img id="result" />
+        </a>
+      </section>
+      <aside>
+        <form
+          id="upload"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div id="file-div" class="size-1 unpadded">
+            <input id="file" type="file" name="file" required accept=".jpg,.png" />
+            <label for="file"><span>Load Image</span><img id="preview" /></label>
+          </div>
+
+          <div class="size-1">
+            <label>Blur</label>
+            <div>
+              <input id="blur" type="number" value="2" step="1" name="blur" />
+              <label for="blur">%, Low = More</label>
+            </div>
+          </div>
+
+          <div class="size-2">
+            <label>Levels</label>
+            <div>
+              <input type="number" value="0" max="100" min="0" step="1" name="lvlbp" />
+              <label for="lvlbp">BP %</label>
+            </div>
+            <div>
+              <input type="number" value="90" max="100" min="0" step="1" name="lvlwp" />
+              <label for="lvlwp">WP %</label>
+            </div>
+            <div>
+              <input type="number" value="1.2" step="0.01" name="gamma" />
+              <label for="gamma">Gamma</label>
+            </div>
+          </div>
+          
+          <div class="size-1">
+            <label>Saturation</label>
+            <div>
+              <input type="number" value="150" step="1" name="saturation" />
+              <label for="saturation">%</label>
+            </div>
+          </div>
+
+          <div class="size-2">
+            <label>Noise</label>
+            <div>
+              <input type="number" value="2" step="0.01" name="attenuate" />
+              <label for="attenuate">Amount %</label>
+            </div>
+            <div>
+              <input type="number" value="0.2" step="0.01" name="white" />
+              <label for="white">White</label>
+            </div>
+          </div>
+
+          <div class="size-2">
+            <label>Size</label>
+            <div>
+              <input type="text" value="100%" name="size" />
+              <label for="size">Value</label>
+            </div>
+            <div>
+              <select id="size-presets">
+                <option value="" selected disabled>-- presets --</option>
+                <optgroup label="background (5:3)">
+                  <option value="3600x2160!">lg (3600 &times; 2160)</option>
+                  <option value="2880x1728!">md (2880 &times; 1728)</option>
+                  <option value="2100x1260!">sm (2100 &times; 1260)</option>
+                  <option value="1200x720!">xs (1200 &times; 720)</option>
+                </optgroup>
+                <optgroup label="social">
+                  <option value="2160x3840!">story 9:16 (2160 &times; 3840)</option>
+                  <option value="2160x2160!">square 1:1 (2160 &times; 2160)</option>
+                </optgroup>
+                <optgroup label="sources (86 the noise)">
+                  <option value="4800x2880!">background 5:3 (4800 &times; 2880)</option>
+                  <option value="2700x4800!">social story 9:16 (2700 &times; 4800)</option>
+                  <option value="4800x4800!">social square 1:1 (4800 &times; 4800)</option>
+                </optgroup>
+                <optgroup label="miscellaneous">
+                  <option value="100%">100%</option>
+                </optgroup>
+              </select>
+              <label>Presets</label>
+            </div>
+          </div>
+
+          <div class="unpadded">
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      </aside>
+    </main>
+    <script src="public/app.js" type="text/javascript"></script>
+  </body>
+</html>
