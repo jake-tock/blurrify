@@ -47,7 +47,7 @@ class Blurrify {
     const crop = req.body.crop === 'original' ? '' : `-crop ${req.body.crop}`;
     const args = [
       `convert "${this.sourcePath}"`,
-      `-gravity center ${crop} +repage`,
+      `-gravity ${req.body.gravity} ${crop} +repage`,
       `"${this.cropPath}"`,
     ];
 

@@ -67,15 +67,12 @@ app.post('/blur', (req, res) => {
 
 app.post('/crop', (req, res) => {
   const command = blurrify.crop(req);
-  console.log(command);
   exec(command, (error, stdout, stderr) => {
     if (error) {
-      console.error(error);
       res.status(403).json({ error: error.message });
       return;
     }
     if (stderr) {
-      console.error(stderr);
       res.status(403).json({ error: stderr });
       return;
     }

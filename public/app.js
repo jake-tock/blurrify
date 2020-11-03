@@ -11,14 +11,20 @@ const formCrop = document.getElementById('form-crop');
 const formUpload = document.getElementById('form-upload');
 const size = document.querySelector('[name="size"]');
 const sizePresets = document.getElementById('size-presets');
+const cropGravity = document.getElementById('gravity');
 const cropInput = document.getElementById('crop');
 
+let queuedBlur = false;
+let blurring = false;
+
 const blurInputs = document.querySelectorAll('#form-blur input');
-blurInputs.forEach((input) => input.addEventListener('input', () => blur()));
+blurInputs.forEach((input) => input.addEventListener('input', queueBlur));
+
+const cropInputs = document.querySelectorAll('#form-crop select');
+cropInputs.forEach((input) => input.addEventListener('change', crop));
 
 size.addEventListener('change', (e) => (sizePresets.value = size.value));
 sizePresets.addEventListener('change', (e) => (size.value = sizePresets.value));
-cropInput.addEventListener('change', (e) => crop());
 
 inputFile.addEventListener('change', (e) => {
   if (e.target.files[0]) {
@@ -31,6 +37,7 @@ inputFile.addEventListener('change', (e) => {
     document.body.classList.remove('has-file');
   }
   cropInput.value = 'original';
+  cropGravity.value = 'Center';
 });
 
 resultUrl.addEventListener('click', (e) => {
@@ -71,12 +78,20 @@ function upload() {
 }
 
 function blur() {
+  blurring = true;
+  queuedBlur = false;
   document.body.classList.add('loading');
   const formData = new FormData(formBlur);
   const data = Object.fromEntries(formData);
   axios
     .post(reqPath('blur'), data)
-    .then((res) => handleRequestSuccess(res.data))
+    .then((res) => {
+      if (queuedBlur) blur();
+      else {
+        blurring = false;
+        handleRequestSuccess(res.data);
+      }
+    })
     .catch(handleRequestFail);
 }
 
@@ -99,4 +114,9 @@ function handleRequestSuccess(response) {
   resultUrl.href = reqPath(response.blur);
   resultUrl.setAttribute('download', true);
   document.body.classList.remove('loading');
+}
+
+function queueBlur() {
+  if (blurring) queuedBlur = true;
+  else if (!queuedBlur) blur();
 }

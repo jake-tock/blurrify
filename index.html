@@ -32,16 +32,30 @@
         </form>
 
         <form id="form-crop">
-          <div>
+          <div class="size-2">
             <label>Crop</label>
             <div>
               <select id="crop" name="crop">
-                <option value="original" selected>original</option>
+                <option value="original" selected>src</option>
                 <option value="5:3">5:3</option>
                 <option value="1:1">1:1</option>
                 <option value="9:16">9:16</option>
               </select>
-              <label for="crop">crop will center</label>
+              <label for="crop">AR</label>
+            </div>
+            <div>
+              <select id="gravity" name="gravity">
+                <option value="Center" selected>C</option>
+                <option value="East">E</option>
+                <option value="NorthEast">NE</option>
+                <option value="North">N</option>
+                <option value="NorthWest">NW</option>
+                <option value="SouthEast">SE</option>
+                <option value="South">S</option>
+                <option value="SouthWest">SW</option>
+                <option value="West">W</option>
+              </select>
+              <label for="gravity">Gravity</label>
             </div>
           </div>
         </form>
