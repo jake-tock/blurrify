@@ -13,6 +13,20 @@ const size = document.querySelector('[name="size"]');
 const sizePresets = document.getElementById('size-presets');
 const cropGravity = document.getElementById('gravity');
 const cropInput = document.getElementById('crop');
+const settingsInput = document.getElementById('settings');
+
+const values = {
+  blur: 2,
+  lvlbp: 0,
+  lvlwp: 90,
+  gamma: 1.2,
+  saturation: 150,
+  attenuate: 2,
+  white: 0.2,
+  size: '100%',
+};
+
+setValues(values);
 
 let queuedBlur = false;
 let blurring = false;
@@ -24,7 +38,19 @@ const cropInputs = document.querySelectorAll('#form-crop select');
 cropInputs.forEach((input) => input.addEventListener('change', crop));
 
 size.addEventListener('change', (e) => (sizePresets.value = size.value));
-sizePresets.addEventListener('change', (e) => (size.value = sizePresets.value));
+sizePresets.addEventListener('change', (e) => {
+  size.value = sizePresets.value;
+  blur();
+});
+
+settingsInput.addEventListener('change', () => {
+  try {
+    setValues(JSON.parse(settingsInput.value));
+    blur();
+  } catch (e) {
+    settingsInput.value = '';
+  }
+});
 
 inputFile.addEventListener('change', (e) => {
   if (e.target.files[0]) {
@@ -83,6 +109,7 @@ function blur() {
   document.body.classList.add('loading');
   const formData = new FormData(formBlur);
   const data = Object.fromEntries(formData);
+  settingsInput.value = JSON.stringify(data);
   axios
     .post(reqPath('blur'), data)
     .then((res) => {
@@ -119,4 +146,10 @@ function handleRequestSuccess(response) {
 function queueBlur() {
   if (blurring) queuedBlur = true;
   else if (!queuedBlur) blur();
+}
+
+function setValues(values) {
+  for (let k in values) {
+    document.querySelector(`[name="${k}"]`).value = values[k];
+  }
 }

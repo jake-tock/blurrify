@@ -64,6 +64,7 @@ body.loading .loader {
 .loader span + span {
   margin-left: 0.5rem;
 }
+
 body,
 input,
 button {
@@ -79,6 +80,17 @@ main {
   flex-direction: column;
   height: 100%;
 }
+header {
+  background: var(--color-black10);
+  color: var(--color-white);
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.75rem;
+  width: 100%;
+}
+header > div + div {
+  margin-left: 1rem;
+}
 section {
   box-sizing: border-box;
   display: block;
@@ -88,7 +100,7 @@ section {
   position: relative;
   width: 100%;
 }
-aside {
+footer {
   background: var(--color-black10);
   color: var(--color-white);
   display: flex;
@@ -206,29 +218,6 @@ input {
   opacity: 0;
   position: absolute;
 }
-a#result-url {
-  align-content: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  pointer-events: none;
-  position: relative;
-  width: 100%;
-}
-a#result-url[download] {
-  cursor: pointer;
-  pointer-events: all;
-}
-a#result-url[download]:hover::after {
-  background-color: var(--color-black10);
-  color: var(--color-white);
-  content: 'Click to download';
-  padding: 0.5rem;
-  position: fixed;
-  right: 1rem;
-  top: 1rem;
-}
 img#result {
   height: auto;
   left: 50%;
@@ -244,4 +233,16 @@ img#preview {
   display: block;
   height: var(--nav-height);
   width: auto;
+}
+a#result-url {
+  background-color: var(--color-white);
+  border-radius: 3px;
+  color: var(--color-black10);
+  display: none;
+  font-weight: bold;
+  padding: 0.5rem;
+  text-decoration: none;
+}
+a#result-url[download] {
+  display: inline-block;
 }

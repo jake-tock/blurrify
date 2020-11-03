@@ -18,12 +18,18 @@
   <body>
     <div class="loader"><span></span><span></span><span></span></div>
     <main>
+      <header>
+        <div>
+          <input type="text" id="settings" />
+        </div>
+        <div>
+          <a href="" id="result-url">Download&nbsp;Image</a>
+        </div>
+      </header>
       <section>
-        <a href="" id="result-url">
-          <img id="result" />
-        </a>
+        <img id="result" />
       </section>
-      <aside>
+      <footer>
         <form id="form-upload" enctype="multipart/form-data">
           <div id="file-div" class="size-1 unpadded">
             <input id="file" type="file" name="file" required accept=".jpg,.png" />
@@ -33,7 +39,7 @@
 
         <form id="form-crop">
           <div class="size-2">
-            <label>Crop</label>
+            <label>Crop (src, C)</label>
             <div>
               <select id="crop" name="crop">
                 <option value="original" selected>src</option>
@@ -55,14 +61,14 @@
                 <option value="SouthWest">SW</option>
                 <option value="West">W</option>
               </select>
-              <label for="gravity">Gravity</label>
+              <label for="gravity">Origin</label>
             </div>
           </div>
         </form>
 
         <form id="form-blur">
           <div class="size-1">
-            <label>Blur</label>
+            <label>Blur (2)</label>
             <div>
               <input id="blur" type="number" value="2" step="1" name="blur" />
               <label for="blur">%, Low = More</label>
@@ -70,7 +76,7 @@
           </div>
 
           <div class="size-2">
-            <label>Levels</label>
+            <label>Levels (0, 90, 1.2)</label>
             <div>
               <input type="number" value="0" max="100" min="0" step="1" name="lvlbp" />
               <label for="lvlbp">BP %</label>
@@ -86,7 +92,7 @@
           </div>
 
           <div class="size-1">
-            <label>Saturation</label>
+            <label>Saturation (150)</label>
             <div>
               <input type="number" value="150" step="1" name="saturation" />
               <label for="saturation">%</label>
@@ -94,7 +100,7 @@
           </div>
 
           <div class="size-2">
-            <label>Noise</label>
+            <label>Noise (2, 0.2)</label>
             <div>
               <input type="number" value="2" step="0.01" name="attenuate" />
               <label for="attenuate">Amount %</label>
@@ -106,7 +112,7 @@
           </div>
 
           <div class="size-2">
-            <label>Size</label>
+            <label>Output (100%)</label>
             <div>
               <input type="text" value="100%" name="size" />
               <label for="size">Value</label>
@@ -137,7 +143,7 @@
             </div>
           </div>
         </form>
-      </aside>
+      </footer>
     </main>
     <script src="public/app.js" type="text/javascript"></script>
   </body>
