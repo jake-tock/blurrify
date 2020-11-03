@@ -70,7 +70,7 @@
           <div class="size-1">
             <label>Blur (2)</label>
             <div>
-              <input id="blur" type="number" value="2" step="1" name="blur" />
+              <input required id="blur" type="number" value="2" step="1" name="blur" />
               <label for="blur">%, Low = More</label>
             </div>
           </div>
@@ -78,15 +78,15 @@
           <div class="size-2">
             <label>Levels (0, 90, 1.2)</label>
             <div>
-              <input type="number" value="0" max="100" min="0" step="1" name="lvlbp" />
+              <input required type="number" value="0" max="100" min="0" step="1" name="lvlbp" />
               <label for="lvlbp">BP %</label>
             </div>
             <div>
-              <input type="number" value="90" max="100" min="0" step="1" name="lvlwp" />
+              <input required type="number" value="90" max="100" min="0" step="1" name="lvlwp" />
               <label for="lvlwp">WP %</label>
             </div>
             <div>
-              <input type="number" value="1.2" step="0.01" name="gamma" />
+              <input required type="number" value="1.2" step="0.01" name="gamma" />
               <label for="gamma">Gamma</label>
             </div>
           </div>
@@ -94,7 +94,7 @@
           <div class="size-1">
             <label>Saturation (150)</label>
             <div>
-              <input type="number" value="150" step="1" name="saturation" />
+              <input required type="number" value="150" step="1" name="saturation" />
               <label for="saturation">%</label>
             </div>
           </div>
@@ -102,11 +102,11 @@
           <div class="size-2">
             <label>Noise (2, 0.2)</label>
             <div>
-              <input type="number" value="2" step="0.01" name="attenuate" />
+              <input required type="number" value="2" step="0.01" name="attenuate" />
               <label for="attenuate">Amount %</label>
             </div>
             <div>
-              <input type="number" value="0.2" step="0.01" name="white" />
+              <input required type="number" value="0.2" step="0.01" name="white" />
               <label for="white">White</label>
             </div>
           </div>
@@ -114,7 +114,7 @@
           <div class="size-2">
             <label>Output (100%)</label>
             <div>
-              <input type="text" value="100%" name="size" />
+              <input required type="text" value="100%" name="size" />
               <label for="size">Value</label>
             </div>
             <div>
@@ -142,6 +142,8 @@
               <label>Presets</label>
             </div>
           </div>
+
+          <input type="submit" value="Submit" id="submit-blur" />
         </form>
       </footer>
     </main>

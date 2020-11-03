@@ -14,6 +14,7 @@ const sizePresets = document.getElementById('size-presets');
 const cropGravity = document.getElementById('gravity');
 const cropInput = document.getElementById('crop');
 const settingsInput = document.getElementById('settings');
+const submitBlur = document.getElementById('submit-blur');
 
 const values = {
   blur: 2,
@@ -128,7 +129,7 @@ function crop() {
   const data = Object.fromEntries(formData);
   axios
     .post(reqPath('crop'), data)
-    .then(() => blur())
+    .then(() => submitBlur.click())
     .catch(handleRequestFail);
 }
 
@@ -145,7 +146,7 @@ function handleRequestSuccess(response) {
 
 function queueBlur() {
   if (blurring) queuedBlur = true;
-  else if (!queuedBlur) blur();
+  else if (!queuedBlur) submitBlur.click();
 }
 
 function setValues(values) {

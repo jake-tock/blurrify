@@ -13,6 +13,7 @@ body {
 body {
   background: var(--color-black10);
   margin: 0;
+  overflow-x: hidden;
 }
 img#result {
   transition: opacity 250ms ease-in-out;
@@ -63,6 +64,11 @@ body.loading .loader {
 
 .loader span + span {
   margin-left: 0.5rem;
+}
+
+#submit-blur {
+  position: fixed;
+  left: -999999999px;
 }
 
 body,
