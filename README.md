@@ -14,6 +14,8 @@ jump to Step 3 of Installation instructions.
 
 mac only. you have to have imagemagick installed on your machine. we are using homebrew to install imagemagick.
 
+you can test if either of these are installed with `brew -v` and `convert -v` for imagemagick.
+
 ### Step 1: install homebrew
 
 ```sh
