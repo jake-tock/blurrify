@@ -33,13 +33,24 @@ class Blurrify {
     const blurB = `${(100 / $.blur) * 100}%`;
 
     const args = [
-      `convert ${this.cropPath}`,
+      `convert "${this.cropPath}"`,
       `-level ${$.lvlbp}%,${$.lvlwp}%,${$.gamma}`,
       `-filter Gaussian -resize ${blurA} -define filter:sigma=2.9 -resize ${blurB} -resize "${$.size}"`,
       `\\( +clone -resize 50% -attenuate ${$.attenuate} +noise Gaussian -colorspace gray -alpha on -channel a -evaluate subtract 60% -evaluate multiply ${$.white} +channel -interpolate Integer -filter point -scale 200% \\)`,
       `-compose over -modulate 100,${$.saturation},100`,
       `-composite "${this.blurPath}"`,
     ];
+    return args.join(' ');
+  }
+
+  crop(req) {
+    const crop = req.body.crop === 'original' ? '' : `-crop ${req.body.crop}`;
+    const args = [
+      `convert "${this.sourcePath}"`,
+      `-gravity center ${crop} +repage`,
+      `"${this.cropPath}"`,
+    ];
+
     return args.join(' ');
   }
 

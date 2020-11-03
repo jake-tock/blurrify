@@ -6,20 +6,19 @@ const resultUrl = document.getElementById('result-url');
 const imgPreview = document.getElementById('preview');
 const imgResult = document.getElementById('result');
 const inputFile = document.querySelector('[name="file"]');
-const formUpload = document.getElementById('form-upload');
 const formBlur = document.getElementById('form-blur');
+const formCrop = document.getElementById('form-crop');
+const formUpload = document.getElementById('form-upload');
 const size = document.querySelector('[name="size"]');
 const sizePresets = document.getElementById('size-presets');
+const cropInput = document.getElementById('crop');
 
-const watchedInputs = document.querySelectorAll('input[type="text"],input[type="number"]');
-watchedInputs.forEach((input) => input.addEventListener('input', handleOnInput));
-
-function handleOnInput(e) {
-  blur();
-}
+const blurInputs = document.querySelectorAll('#form-blur input');
+blurInputs.forEach((input) => input.addEventListener('input', () => blur()));
 
 size.addEventListener('change', (e) => (sizePresets.value = size.value));
 sizePresets.addEventListener('change', (e) => (size.value = sizePresets.value));
+cropInput.addEventListener('change', (e) => crop());
 
 inputFile.addEventListener('change', (e) => {
   if (e.target.files[0]) {
@@ -31,6 +30,11 @@ inputFile.addEventListener('change', (e) => {
   } else {
     document.body.classList.remove('has-file');
   }
+  cropInput.value = 'original';
+});
+
+resultUrl.addEventListener('click', (e) => {
+  if (resultUrl.href === '#') e.preventDefault();
 });
 
 formUpload.addEventListener('submit', (e) => {
@@ -40,6 +44,10 @@ formUpload.addEventListener('submit', (e) => {
 formBlur.addEventListener('submit', (e) => {
   e.preventDefault();
   blur();
+});
+formCrop.addEventListener('submit', (e) => {
+  e.preventDefault();
+  crop();
 });
 
 function upload() {
@@ -55,6 +63,7 @@ function upload() {
   xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       handleRequestSuccess(JSON.parse(this.response));
+      blur();
     } else if (this.readyState === XMLHttpRequest.DONE) {
       handleRequestFail(this.response);
     }
@@ -71,6 +80,16 @@ function blur() {
     .catch(handleRequestFail);
 }
 
+function crop() {
+  document.body.classList.add('loading');
+  const formData = new FormData(formCrop);
+  const data = Object.fromEntries(formData);
+  axios
+    .post(reqPath('crop'), data)
+    .then(() => blur())
+    .catch(handleRequestFail);
+}
+
 function handleRequestFail(response) {
   console.error(response);
   document.body.classList.remove('loading');
@@ -78,5 +97,6 @@ function handleRequestFail(response) {
 function handleRequestSuccess(response) {
   imgResult.src = reqPath(`${response.blur}?a=${Date.now()}`);
   resultUrl.href = reqPath(response.blur);
+  resultUrl.setAttribute('download', true);
   document.body.classList.remove('loading');
 }

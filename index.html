@@ -16,9 +16,10 @@
     <script src="public/axios.min.js" type="text/javascript"></script>
   </head>
   <body>
+    <div class="loader"><span></span><span></span><span></span></div>
     <main>
       <section>
-        <a href="#" download id="result-url">
+        <a href="" id="result-url">
           <img id="result" />
         </a>
       </section>
@@ -27,6 +28,21 @@
           <div id="file-div" class="size-1 unpadded">
             <input id="file" type="file" name="file" required accept=".jpg,.png" />
             <label for="file"><span>Load Image</span><img id="preview" /></label>
+          </div>
+        </form>
+
+        <form id="form-crop">
+          <div>
+            <label>Crop</label>
+            <div>
+              <select id="crop" name="crop">
+                <option value="original" selected>original</option>
+                <option value="5:3">5:3</option>
+                <option value="1:1">1:1</option>
+                <option value="9:16">9:16</option>
+              </select>
+              <label for="crop">crop will center</label>
+            </div>
           </div>
         </form>
 
@@ -105,10 +121,6 @@
               </select>
               <label>Presets</label>
             </div>
-          </div>
-
-          <div class="unpadded">
-            <input type="submit" value="Blurrify!" />
           </div>
         </form>
       </aside>

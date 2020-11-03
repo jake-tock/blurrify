@@ -4,6 +4,7 @@
   --color-black08: #333;
   --color-black07: #444;
   --color-white: #fff;
+  --nav-height: 90px;
 }
 html,
 body {
@@ -12,12 +13,56 @@ body {
 body {
   background: var(--color-black10);
   margin: 0;
+}
+img#result {
   transition: opacity 250ms ease-in-out;
 }
-body.loading {
-  cursor: no-drop;
+body.loading img#result {
   opacity: 0.5;
+}
+body.loading .loader {
+  opacity: 1;
+}
+.loader {
+  display: flex;
+  left: 50%;
+  opacity: 0;
   pointer-events: none;
+  position: fixed;
+  top: calc((100% - var(--nav-height)) * 0.5);
+  transition: opacity 250ms ease-in-out;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+@keyframes loader {
+  0% {
+    transform: translateY(-0.5rem);
+  }
+  90%,
+  100% {
+    transform: translateY(0.5rem);
+  }
+}
+.loader span {
+  animation: loader 500ms ease-in-out infinite alternate;
+  background: var(--color-white);
+  border-radius: 4px;
+  display: block;
+  height: 3rem;
+  width: 0.5rem;
+}
+.loader span:nth-child(1) {
+  animation-delay: -500ms;
+}
+.loader span:nth-child(2) {
+  animation-delay: -400ms;
+}
+.loader span:nth-child(3) {
+  animation-delay: -300ms;
+}
+
+.loader span + span {
+  margin-left: 0.5rem;
 }
 body,
 input,
@@ -38,7 +83,6 @@ section {
   box-sizing: border-box;
   display: block;
   flex: 1;
-  height: calc(100% - var(--nav-height));
   padding: 0.75rem;
   padding-bottom: 0;
   position: relative;
@@ -47,12 +91,18 @@ section {
 aside {
   background: var(--color-black10);
   color: var(--color-white);
+  display: flex;
   padding: 0.75rem;
   width: 100%;
 }
+form:last-child {
+  flex: 1;
+}
+form + form {
+  margin-left: 1rem;
+}
 form {
   display: flex;
-  flex: 1;
   height: 100%;
 }
 body:not(.has-file) form > div:not(#file-div) {
@@ -162,10 +212,15 @@ a#result-url {
   flex-direction: column;
   height: 100%;
   justify-content: center;
+  pointer-events: none;
   position: relative;
   width: 100%;
 }
-a#result-url:hover::after {
+a#result-url[download] {
+  cursor: pointer;
+  pointer-events: all;
+}
+a#result-url[download]:hover::after {
   background-color: var(--color-black10);
   color: var(--color-white);
   content: 'Click to download';
@@ -187,6 +242,6 @@ img#result {
 img#preview {
   background: #444;
   display: block;
-  height: 90px;
+  height: var(--nav-height);
   width: auto;
 }
