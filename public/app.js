@@ -6,58 +6,77 @@ const resultUrl = document.getElementById('result-url');
 const imgPreview = document.getElementById('preview');
 const imgResult = document.getElementById('result');
 const inputFile = document.querySelector('[name="file"]');
-const formUpload = document.getElementById('upload');
+const formUpload = document.getElementById('form-upload');
+const formBlur = document.getElementById('form-blur');
 const size = document.querySelector('[name="size"]');
 const sizePresets = document.getElementById('size-presets');
 
-size.addEventListener('change', (e) => {
-  sizePresets.value = size.value;
-});
-sizePresets.addEventListener('change', (e) => {
-  size.value = sizePresets.value;
-});
+const watchedInputs = document.querySelectorAll('input[type="text"],input[type="number"]');
+watchedInputs.forEach((input) => input.addEventListener('input', handleOnInput));
+
+function handleOnInput(e) {
+  blur();
+}
+
+size.addEventListener('change', (e) => (sizePresets.value = size.value));
+sizePresets.addEventListener('change', (e) => (size.value = sizePresets.value));
 
 inputFile.addEventListener('change', (e) => {
   if (e.target.files[0]) {
-    formUpload.classList.add('has-file');
+    document.body.classList.add('has-file');
     const fr = new FileReader();
     fr.onload = () => (imgPreview.src = fr.result);
     fr.readAsDataURL(e.target.files[0]);
-    process();
+    upload();
   } else {
-    formUpload.classList.remove('has-file');
+    document.body.classList.remove('has-file');
   }
 });
 
 formUpload.addEventListener('submit', (e) => {
   e.preventDefault();
-  process();
+  upload();
+});
+formBlur.addEventListener('submit', (e) => {
+  e.preventDefault();
+  blur();
 });
 
-function process() {
+function upload() {
   document.body.classList.add('loading');
   imgResult.src = '';
   if (!inputFile.files[0]) {
     document.body.classList.remove('loading');
     return;
   }
-  const formData = new FormData(formUpload);
   const xhr = new XMLHttpRequest();
   xhr.open('POST', reqPath('upload'), true);
-  xhr.send(formData);
+  xhr.send(new FormData(formUpload));
   xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      const response = JSON.parse(this.response);
-      handleResponse(response);
+      handleRequestSuccess(JSON.parse(this.response));
     } else if (this.readyState === XMLHttpRequest.DONE) {
-      console.error(this.response);
-      document.body.classList.remove('loading');
+      handleRequestFail(this.response);
     }
   };
 }
 
-function handleResponse(response) {
-  imgResult.src = reqPath(`${response.path}?a=${Date.now()}`);
-  resultUrl.href = reqPath(response.path);
+function blur() {
+  document.body.classList.add('loading');
+  const formData = new FormData(formBlur);
+  const data = Object.fromEntries(formData);
+  axios
+    .post(reqPath('blur'), data)
+    .then((res) => handleRequestSuccess(res.data))
+    .catch(handleRequestFail);
+}
+
+function handleRequestFail(response) {
+  console.error(response);
+  document.body.classList.remove('loading');
+}
+function handleRequestSuccess(response) {
+  imgResult.src = reqPath(`${response.blur}?a=${Date.now()}`);
+  resultUrl.href = reqPath(response.blur);
   document.body.classList.remove('loading');
 }

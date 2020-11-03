@@ -11,42 +11,45 @@ const defaults = {
   white: 0.2,
 };
 
-const blurrify = {
-  processedRequest(req, assetsPath) {
-    const res = {};
-    const settings = Object.assign({}, defaults);
+class Blurrify {
+  constructor(assetsPath) {
+    this.assetsPath = assetsPath;
+  }
 
-    settings.blur = req.body.blur || settings.blur;
-    settings.gamma = req.body.gamma || settings.gamma;
-    settings.lvlbp = req.body.lvlbp || settings.lvlbp;
-    settings.lvlwp = req.body.lvlwp || settings.lvlwp;
-    settings.attenuate = req.body.attenuate || settings.attenuate;
-    settings.saturation = req.body.saturation || settings.saturation;
-    settings.size = req.body.size || settings.size;
-    settings.white = req.body.white || settings.white;
-
-    res.extName = path.extname(req.file.originalname).toLowerCase();
+  initialize(file) {
+    this.extension = path.extname(file.originalname).toLowerCase();
     const filename = 'result';
-    res.path = `${filename}-blur${res.extName}`;
-    res.targetPath = path.join(assetsPath, `${filename}${res.extName}`);
-    res.destPath = path.join(assetsPath, res.path);
+    this.blurName = `${filename}-blur${this.extension}`;
+    this.cropName = `${filename}-crop${this.extension}`;
+    this.sourceName = `${filename}${this.extension}`;
+    this.blurPath = path.join(this.assetsPath, this.blurName);
+    this.cropPath = path.join(this.assetsPath, this.cropName);
+    this.sourcePath = path.join(this.assetsPath, this.sourceName);
+  }
 
-    const blurA = `${settings.blur}%`;
-    const blurB = `${(100 / settings.blur) * 100}%`;
+  blur(req) {
+    const $ = { ...defaults, ...req.body };
+    const blurA = `${$.blur}%`;
+    const blurB = `${(100 / $.blur) * 100}%`;
 
     const args = [
-      `convert ${res.targetPath}`,
-      `-level ${settings.lvlbp}%,${settings.lvlwp}%,${settings.gamma}`,
-      `-filter Gaussian -resize ${blurA} -define filter:sigma=2.9 -resize ${blurB} -resize "${settings.size}"`,
-      `\\( +clone -resize 50% -attenuate ${settings.attenuate} +noise Gaussian -colorspace gray -alpha on -channel a -evaluate subtract 60% -evaluate multiply ${settings.white} +channel -interpolate Integer -filter point -scale 200% \\)`,
-      `-compose over -modulate 100,${settings.saturation},100`,
-      `-composite "${res.destPath}"`,
+      `convert ${this.cropPath}`,
+      `-level ${$.lvlbp}%,${$.lvlwp}%,${$.gamma}`,
+      `-filter Gaussian -resize ${blurA} -define filter:sigma=2.9 -resize ${blurB} -resize "${$.size}"`,
+      `\\( +clone -resize 50% -attenuate ${$.attenuate} +noise Gaussian -colorspace gray -alpha on -channel a -evaluate subtract 60% -evaluate multiply ${$.white} +channel -interpolate Integer -filter point -scale 200% \\)`,
+      `-compose over -modulate 100,${$.saturation},100`,
+      `-composite "${this.blurPath}"`,
     ];
-    res.settings = settings;
-    res.command = args.join(' ');
+    return args.join(' ');
+  }
 
-    return res;
-  },
-};
+  response() {
+    return { blur: this.blurName, crop: this.cropName, source: this.sourceName };
+  }
 
-module.exports = blurrify;
+  isImage() {
+    return this.extension === '.png' || this.extension === '.jpg';
+  }
+}
+
+module.exports = Blurrify;
